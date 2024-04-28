@@ -22,21 +22,21 @@ If an exception or keyboard interrupt occurs in the middle of the simulation, th
 The AI strategy will be instantiated like `iter(MinesweeperAI(self))`, where self is an instance of a MinesweeperGame, and the AI should move when `next()` is called on it. This means that it's name should be `MinesweeperAI`, and it could either be a function that contains the `yield` keyword or a class that defines the `__iter__` method that uses `yield`. The AI strategy should call the methods on the MinesweeperGame that is passed as its argument, the value that is yielded will be discarded; it's only there so that you can step 1 move at a time.
 
 Useful methods and properties of MinesweeperGame objects for AI players:
-`MinesweeperGame.board : list[list[int]]`: a 2d array of integers representing the game's board in the following way:
--1: a tile that has not yet been opened or flagged
-0-8: an opened tile with that number of neighboring mines
-9: an unopened tile that has been flagged
-Modifying this array is OK, it won't affect the functioning of the game.
-`MinesweeperGame.flip(row : int, column : int) -> int`: the tile at the (zero-indexed) row and column will be opened, and the number on the tile that was opened will be returned (or -1 if it didn't open a tile)
-`MinesweeperGame.flag(row : int, column : int) -> int`: the tile at the given row and column's flagged status will be toggled, and the boolean flagged status of the tile will be returned as an into (or -1 if it didn't affect a tile)
-The following properties are read-only:
-`MinesweeperGame.height : int`: the number of rows on the board
-`MinesweeperGame.width : int`: the number of columns on the board
-`MinesweeperGame.bombs : int`: the total number of mines on the board
-`MinesweeperGame.minecount : int`: the number of mines remaining that's displayed to the player which is the total number of mines minus the number of flagged (so it can be inaccurate)
-`MinesweeperGame.zero_start : bool`: whether the first move is guaranteed to open a tile containing a 0
-`MinesweeperGame.firstmove : bool`: whether the first move has been made yet
-`MinesweeperGame.active : bool`: whether the game has not ended yet
+`MinesweeperGame.board : list[list[int]]`: a 2d array of integers representing the game's board in the following way:\
+-1: a tile that has not yet been opened or flagged\
+0-8: an opened tile with that number of neighboring mines\
+9: an unopened tile that has been flagged\
+Modifying this array is OK, it won't affect the functioning of the game.\
+`MinesweeperGame.flip(row : int, column : int) -> int`: the tile at the (zero-indexed) row and column will be opened, and the number on the tile that was opened will be returned (or -1 if it didn't open a tile)\
+`MinesweeperGame.flag(row : int, column : int) -> int`: the tile at the given row and column's flagged status will be toggled, and the boolean flagged status of the tile will be returned as an into (or -1 if it didn't affect a tile)\
+The following properties are read-only:\
+`MinesweeperGame.height : int`: the number of rows on the board\
+`MinesweeperGame.width : int`: the number of columns on the board\
+`MinesweeperGame.bombs : int`: the total number of mines on the board\
+`MinesweeperGame.minecount : int`: the number of mines remaining that's displayed to the player which is the total number of mines minus the number of flagged (so it can be inaccurate)\
+`MinesweeperGame.zero_start : bool`: whether the first move is guaranteed to open a tile containing a 0\
+`MinesweeperGame.firstmove : bool`: whether the first move has been made yet\
+`MinesweeperGame.active : bool`: whether the game has not ended yet\
 
 You can check the files in the `/strategies` folder for some examples
 
