@@ -21,7 +21,7 @@ If an exception or keyboard interrupt occurs in the middle of the simulation, th
 ## Creating AI strategies
 The AI strategy will be instantiated like `iter(MinesweeperAI(self))`, where self is an instance of a MinesweeperGame, and the AI should move when `next()` is called on it. This means that it's name should be `MinesweeperAI`, and it could either be a function that contains the `yield` keyword or a class that defines the `__iter__` method that uses `yield`. The AI strategy should call the methods on the MinesweeperGame that is passed as its argument, the value that is yielded will be discarded; it's only there so that you can step 1 move at a time.
 
-Useful methods and properties of MinesweeperGame objects for AI players:
+Useful methods and properties of MinesweeperGame objects for AI players:\
 `MinesweeperGame.board : list[list[int]]`: a 2d array of integers representing the game's board in the following way:\
 -1: a tile that has not yet been opened or flagged\
 0-8: an opened tile with that number of neighboring mines\
