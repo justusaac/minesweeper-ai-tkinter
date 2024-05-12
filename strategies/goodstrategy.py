@@ -1,3 +1,10 @@
+'''
+This strategy looks for safe moves by comparing pairs of nearby tiles and seeing if all/none of one tile's neighboring mines are also neighboring the other tile.
+If that fails its guessing method will be determined by the number of remaining mines.
+If there are a lot of mines remaining, it wil guess by opening a tile that borders the fewest unknown tiles.
+If there are a smaller amount of mines remaining, it will guess by opening the tile that has a mine in the fewest number of possible mine configurations.
+This strategy is optimized a bit more for speed rather than win rate, so it can work well on larger boards.
+'''
 import itertools
 from collections import Counter
 from functools import cache
@@ -83,14 +90,12 @@ class MinesweeperAI:
                 if ratio==0:
                     for r2,c2 in self.neighbors(r,c):
                         if board[r2][c2]==-1:
-                            #print((r2,c2))
                             foundsomething=True
                             self.game.flip(r2,c2)
                             yield
                 elif ratio==1:
                     for r2,c2 in self.neighbors(r,c):
                         if board[r2][c2]==-1:
-                            #print((r2,c2),'flag')
                             foundsomething=True
                             self.game.flag(r2,c2)
                             yield
@@ -173,14 +178,12 @@ class MinesweeperAI:
                         if unk2==lowest:
                             for r0,c0 in uniq2:
                                 if board[r0][c0]==-1:
-                                    #print((r0,c0))
                                     foundsomething=True
                                     self.game.flip(r0,c0)
                                     yield
                         if unk2-highest == len(uniq2):
                             for r0,c0 in uniq2:
                                 if board[r0][c0]==-1:
-                                    #print((r0,c0),'flag')
                                     foundsomething=True
                                     self.game.flag(r0,c0)
                                     yield
@@ -371,7 +374,6 @@ class MinesweeperAI:
                             bestcandidates=[]
                         bestcandidates.append((r,c))
                         
-                #print(occur,additions, unkprob)
                 
                 if unkprob==1:
                     for r,c in set(unknown)-set(edge):
@@ -405,7 +407,6 @@ class MinesweeperAI:
                 if n<bestn:
                     bestn=n
                     bestpos = (r,c)
-            #print(bestpos,'yolo')
             if bestpos:
                 self.game.flip(*bestpos)
                 yield

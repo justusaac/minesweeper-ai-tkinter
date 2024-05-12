@@ -1,3 +1,6 @@
+'''
+This strategy is the same as the other single point strategy but written as a function just to show that you can do that
+'''
 import random
 
 def MinesweeperAI(game):

@@ -3,12 +3,12 @@
 
 ## Playing Minesweeper
 #### GUI
-Running `MinesweeperGraphics.py` opens a Tk window that resembles the classic Minesweeper game. The board dimensions and game parameters can be modified from the `Settings` menu, along with the AI strategy that will be used and the layout of the board if you don't want it to be random.
+Running `MinesweeperGraphics.py` opens a Tk window that resembles the Minesweeper game. The board dimensions and game parameters can be modified from the `Settings` menu, along with the AI strategy that will be used and the layout of the board if you don't want it to be random.
 The file defining the AI strategy to be imported will be searched for in the `/strategies` folder.
 The file defining the board to import will be searched for in the `/boards` folder. Clearing the text entry for the board will make the board randomly generated.
 These settings will be applied upon the start of a new game.
 
-The current board can be exported with the `Export` button, which will also cause you to lose the current game if it is still going. It will save the current board in `/boards/MinesweeperGameBoard.txt` and you can rename the file afterwards. If the game's first move has not been made, the configuration of mines will not yet have been generated, so instead all the tiles that have been flagged will be exported, which is an easy way to make a custom mine configuration. The way the boards are stored is also easily human interpretable, so you can modify the files by hand.
+The current board can be exported with the `Export` button, which will also cause you to lose the current game if it is still going. If the game's first move has not been made, the configuration of mines will not yet have been generated, so instead all the tiles that have been flagged will be exported, which is an easy way to make a custom mine configuration. The way the boards are stored is also easily human interpretable so the files can be modified by hand.
 
 #### AI simulation
 Running `StrategyTest.py` will make an AI strategy play many games of Minesweeper without any graphics and report the win rate and time taken afterwards. The details of this simulation can be configured through the extra command line arguments: 
@@ -16,7 +16,7 @@ The name of a file will be interpreted as the file containing the AI strategy to
 A single integer will be used to determine the number of games to simulate; 
 And three integers separated by 'x' will define the height, width, and number of mines for the game board. 
 
-If an exception or keyboard interrupt occurs in the middle of the simulation, the current game board will be exported to `boards/StrategyTestBoard.txt` so that you can perhaps import that to the MinesweeperGraphics game to make it easier to figure out what exactly happened.
+If an exception or keyboard interrupt occurs in the middle of the simulation, the current game board will be exported to `boards/StrategyTestBoard.txt` which can perhaps be imported to the MinesweeperGraphics game to make it easier to figure out what exactly happened.
 
 ## Creating AI strategies
 The AI strategy will be instantiated like `iter(MinesweeperAI(self))`, where self is an instance of a MinesweeperGame, and the AI should move when `next()` is called on it. This means that it's name should be `MinesweeperAI`, and it could either be a function that contains the `yield` keyword or a class that defines the `__iter__` method that uses `yield`. The AI strategy should call the methods on the MinesweeperGame that is passed as its argument, the value that is yielded will be discarded; it's only there so that you can step 1 move at a time.

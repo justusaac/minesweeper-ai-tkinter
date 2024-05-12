@@ -1,3 +1,8 @@
+'''
+This strategy looks for any tiles where all/none of the mines around it have been flagged
+If it can't find any it will pick a random tile and open it.
+This is not a good strategy at all but it is commonly mentioned as a baselne in research papers
+'''
 import random
 
 class MinesweeperAI:

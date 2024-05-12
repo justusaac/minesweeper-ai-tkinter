@@ -1,3 +1,11 @@
+'''
+This strategy calculates the probability of each hidden tile containing a mine, as well as each number.
+This information is used to estimate the probability of making meaningful progress when guessing.
+This also lets it find every tile that is safe to open.
+It is more sophisticated than the other strategies I made/found, for Hard difficulty its win rate is about 45%.
+With typical sized boards it is very rare but possible that it could take hours to make its guess.
+With larger boards it gets more and more likely to be super slow, this strategy is not as well suited for those games.
+'''
 from collections import Counter
 import itertools
 from functools import cache
@@ -97,14 +105,12 @@ class MinesweeperAI:
                 if ratio==0:
                     for r2,c2 in self.neighbors(r,c):
                         if board[r2][c2]==-1:
-                            #print((r2,c2))
                             foundsomething=True
                             self.game.flip(r2,c2)
                             yield
                 elif ratio==1:
                     for r2,c2 in self.neighbors(r,c):
                         if board[r2][c2]==-1:
-                            #print((r2,c2),'flag')
                             foundsomething=True
                             self.game.flag(r2,c2)
                             yield
@@ -180,14 +186,12 @@ class MinesweeperAI:
                         if unk2==lowest:
                             for r0,c0 in uniq2:
                                 if board[r0][c0]==-1:
-                                    #print((r0,c0))
                                     foundsomething=True
                                     self.game.flip(r0,c0)
                                     yield
                         if unk2-highest == len(uniq2):
                             for r0,c0 in uniq2:
                                 if board[r0][c0]==-1:
-                                    #print((r0,c0),'flag')
                                     foundsomething=True
                                     self.game.flag(r0,c0)
                                     yield
@@ -395,7 +399,6 @@ class MinesweeperAI:
                     bestpt = pt
 
                     
-            #print(occur,additions, unkprob)
             if unkprob==1:
                 for r,c in set(unknown)-set(edge):
                     if board[r][c]==-1:
@@ -438,7 +441,6 @@ class MinesweeperAI:
             
             for pt in unknown:
                 if pt not in self.dead and analyze_dead(pt):
-                    #print(pt,"dead")
                     self.dead.add(pt)
                 
             
@@ -467,7 +469,6 @@ class MinesweeperAI:
                     break
                 else:
                     #no more info coming
-                    #print(edgess)
                     bestpos = self.pickguess(bc)
                     if bestpos:
                         foundsomething=True
@@ -493,8 +494,6 @@ class MinesweeperAI:
             bestcandidates.difference_update(self.dead)
             #No tiles that gain any info, just have to guess the safest guess
             if not bestcandidates:
-                #print("All dead", bestpt)
-                #print(occur,additions)
                 
                 if board[bestpt[0]][bestpt[1]]==-1:
                     self.game.flip(*bestpt)
@@ -532,7 +531,6 @@ class MinesweeperAI:
                     bestchoices.append(t[0])
             choice = self.pickguess(bestchoices)
             
-            #print(choices,additions)
 
             
             #Calculate probabilities of unknown tiles being 0
@@ -581,7 +579,6 @@ class MinesweeperAI:
             
             #Guess
             
-            #print('c',choice)
             self.game.flip(*choice)
             yield
                         

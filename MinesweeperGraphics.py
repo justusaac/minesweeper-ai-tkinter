@@ -2,6 +2,7 @@ from MinesweeperGame import *
 
 from tkinter import *
 import tkinter.messagebox
+import tkinter.filedialog
 
 class MinesweeperGraphics(MinesweeperGame):
     colordict ={0:'#bbb',1:'#00f',2:'#090',3:'#e00',4:'#008',\
@@ -296,9 +297,16 @@ class MinesweeperGraphics(MinesweeperGame):
         self.importentry.delete(0,'end')
 
     def exportfile(self,name='boards/MinesweeperGameBoard.txt'):
+        name = tkinter.filedialog.asksaveasfilename(
+            initialdir="./boards",
+            title="Export Minesweeper board",
+            defaultextension="txt"
+        )
+        if not name:
+            return
         super().exportfile(name)
         self.importentry.delete(0,'end')
-        self.importentry.insert(0,('/').join(name.split('/')[1:]))
+        self.importentry.insert(0,'/'.join(name.split('boards/')[1:]))
 
     #Reads in the new game settings from the relevant inputs
     def newgame(self):

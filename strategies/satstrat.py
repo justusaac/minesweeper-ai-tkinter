@@ -1,3 +1,7 @@
+'''
+This strategy converts the minesweeper board into a boolean formula and uses a SAT solver to find the proportion of valid boards in which each tile is a mine.
+It is a cute idea but unfortunately it is extremely slow compared to something specifically designed for minesweeper.
+'''
 import pysat.solvers
 import pysat.card
 import pysat.formula
@@ -155,7 +159,6 @@ class MinesweeperAI:
                     if not obj:
                         continue
                     r,c = obj
-                    #print((obj,ct),end='')
                     if ct==0:
                         if board[r][c]==-1:
                             foundsomething=True
@@ -174,7 +177,6 @@ class MinesweeperAI:
                             bestcandidates=[]
                             bestprob=ct/count
                         bestcandidates.append(obj)
-                #print(count)
                         
             #Edge case of no edge
             if len(frontier)==0:
