@@ -43,7 +43,7 @@ class MinesweeperGame:
             self._aimodule = None
             self._ai=None
             self._aifilename=''
-            raiseion('Bad AI File: '+str(e))
+            raise Exception('Bad AI File: '+str(e))
                 
     def _import_strategy(self):
         self._aimodule = importlib.import_module('strategies.'+os.path.splitext(self._aifilename)[0])
