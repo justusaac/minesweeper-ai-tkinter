@@ -200,8 +200,6 @@ class MinesweeperAI:
             if foundsomething:
                 continue
 
-            #Here goes monte carlo simulation when i make it....
-
             
             #Graph search to identify disjointed regions
             visited = set()

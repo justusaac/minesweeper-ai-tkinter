@@ -4,6 +4,7 @@ If that fails its guessing method will be determined by the number of remaining 
 If there are a lot of mines remaining, it wil guess by opening a tile that borders the fewest unknown tiles.
 If there are a smaller amount of mines remaining, it will guess by opening the tile that has a mine in the fewest number of possible mine configurations.
 This strategy is optimized a bit more for speed rather than win rate, so it can work well on larger boards.
+On hard difficulty board it has around 40% win rate
 '''
 import itertools
 from collections import Counter
@@ -39,7 +40,7 @@ class MinesweeperAI:
         self.secondneighbors.cache_clear()
         
         if not self.game.firstmove:
-            choice = ((h//4)-1,(w//4)-1) if self.game.zero_start else (0,0)
+            choice = (max(0,(h//4)-1),max(0,(w//4)-1)) if self.game.zero_start else (0,0)
             self.game.flip(*choice)
             yield
         

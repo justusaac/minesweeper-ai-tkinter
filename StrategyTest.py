@@ -15,7 +15,7 @@ def test_strategy(n):
             n = int(a)
         elif re.match(r'^.+\.[a-zA-Z0-9]+$',a):
             args[4] = a
-    print(f'Testing {args[4]} for {n} games on {args[0]}x{args[1]}x{args[2]} {'modern' if args[3] else 'classic'} board')
+    print(f'Testing {args[4]} for {n} games on {args[0]}x{args[1]}x{args[2]} {"modern" if args[3] else "classic"} board')
     m = MinesweeperGame(*args)
     outfilename = 'boards/StrategyTestBoard.txt'
     try:

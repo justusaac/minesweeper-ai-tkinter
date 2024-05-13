@@ -3,6 +3,7 @@ from MinesweeperGame import *
 from tkinter import *
 import tkinter.messagebox
 import tkinter.filedialog
+import os.path
 
 class MinesweeperGraphics(MinesweeperGame):
     colordict ={0:'#bbb',1:'#00f',2:'#090',3:'#e00',4:'#008',\
@@ -27,23 +28,23 @@ class MinesweeperGraphics(MinesweeperGame):
 
         #load assets or default text
         try:
-            self.root.tk.call('wm', 'iconphoto', self.root._w, PhotoImage(file='assets/swag.png'))
-        except:
+            self.root.tk.call('wm', 'iconphoto', self.root._w, PhotoImage(file=os.path.dirname(__file__)+'/assets/swag.png'))
+        except Exception:
             pass
-
+        #This needs to be a variable otherwise it will be garbage collected, breaking the whole program
         self.pixel = PhotoImage(width=0,height=0)
         try:
-            self.images.update({'flag':{'image':PhotoImage(file='assets/flag.png')}})
-        except:
+            self.images.update({'flag':{'image':PhotoImage(file=os.path.dirname(__file__)+'/assets/flag.png')}})
+        except Exception:
             self.images.update({'flag':{'text':'F','fg':'#e00'}})
             
         try:
-            self.images.update({'9':{'image':PhotoImage(file='assets/9.png')}})
-        except:
+            self.images.update({'9':{'image':PhotoImage(file=os.path.dirname(__file__)+'/assets/9.png')}})
+        except Exception:
             self.images.update({'9':{'text':'B'}})
         try:
-            self.images.update({'9x':{'image':PhotoImage(file='assets/9x.png')}})
-        except:
+            self.images.update({'9x':{'image':PhotoImage(file=os.path.dirname(__file__)+'/assets/9x.png')}})
+        except Exception:
             self.images.update({'9x':{'text':'X','fg':'#e00'}})
 
 
@@ -272,7 +273,7 @@ class MinesweeperGraphics(MinesweeperGame):
             self.delay = float(self.delayvar.get().strip() or 0)
             if self.delay<0:
                 raise Exception
-        except:
+        except Exception:
             self.delay=ogdelay
             tkinter.messagebox.showerror('Error','Bad delay')
             self.delayvar.set(str(ogdelay))
@@ -348,7 +349,7 @@ class MinesweeperGraphics(MinesweeperGame):
                 self._aifilename=mod
                 self._import_strategy()
                 self._ai = iter(self._aimodule.MinesweeperAI(self))
-            except:
+            except Exception:
                 self._aimodule = None
                 self._aifilename=''
                 self._ai = None

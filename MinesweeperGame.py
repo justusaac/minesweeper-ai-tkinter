@@ -43,7 +43,7 @@ class MinesweeperGame:
             self._aimodule = None
             self._ai=None
             self._aifilename=''
-            raise Exception('Bad AI File: '+str(e))
+            raiseion('Bad AI File: '+str(e))
                 
     def _import_strategy(self):
         self._aimodule = importlib.import_module('strategies.'+os.path.splitext(self._aifilename)[0])
@@ -131,7 +131,7 @@ class MinesweeperGame:
             return 9
         try:
             self.board[r][c]=n
-        except:
+        except Exception:
             pass
         
         
@@ -153,7 +153,7 @@ class MinesweeperGame:
         t.flagged = not t.flagged
         try:
             self.board[r][c] = 9 if t.flagged else -1
-        except:
+        except Exception:
             pass
 
         if t.flagged:
