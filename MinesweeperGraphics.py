@@ -145,13 +145,15 @@ class MinesweeperGraphics(MinesweeperGame):
         self.impframe.grid(row=2,column=0,sticky='news',padx=1,pady=1)
         
         self.clearbtn = Button(self.impframe,text='Clear',command=self._clearimport)
-        self.clearbtn.grid(row=0,column=1,sticky='w',padx=1,pady=1)
+        self.clearbtn.grid(row=2,column=0,sticky='w',padx=1,pady=1)
         self.exportbtn = Button(self.impframe,text='Export board',command=self.exportfile)
-        self.exportbtn.grid(row=2,column=0,sticky='w',padx=1,pady=1,columnspan=2)
+        self.exportbtn.grid(row=2,column=1,sticky='w',padx=1,pady=1,columnspan=2)
         self.importlabel=Label(self.impframe,text='Import from:')
-        self.importlabel.grid(row=0,column=0,sticky='w',padx=1,pady=1)
+        self.importlabel.grid(row=0,column=0,sticky='w',padx=1,pady=1,columnspan=2)
         self.importentry = Entry(self.impframe,font='Consolas',width=16)
-        self.importentry.grid(row=1,column=0,columnspan=2,sticky='news',padx=1,pady=1)
+        self.importbtn = Button(self.impframe,text='Browse...',command=self._pickimport)
+        self.importbtn.grid(row=0,column=2,sticky='w',padx=1,pady=1)
+        self.importentry.grid(row=1,column=0,columnspan=3,sticky='news',padx=1,pady=1)
         self.importentry.insert(0,self._fromfile)
 
         self.closebtn = Button(self.setframe,text='Close',command=self._closepopup)
@@ -297,6 +299,18 @@ class MinesweeperGraphics(MinesweeperGame):
     def _clearimport(self):
         self.importentry.delete(0,'end')
 
+    def _pickimport(self):
+        name = tkinter.filedialog.askopenfilename(
+            initialdir="./boards",
+            title="Import Minesweeper board"
+        )
+        try:
+            name = '/'.join(name.split('boards/')[1:])
+        except Exception:
+            tkinter.messagebox.showerror('Error','Board must be in boards folder')
+        self.importentry.delete(0,'end')
+        self.importentry.insert(0,name)
+        
     def exportfile(self,name='boards/MinesweeperGameBoard.txt'):
         name = tkinter.filedialog.asksaveasfilename(
             initialdir="./boards",
