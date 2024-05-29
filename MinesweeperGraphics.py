@@ -304,12 +304,18 @@ class MinesweeperGraphics(MinesweeperGame):
             initialdir="./boards",
             title="Import Minesweeper board"
         )
+        self._settings()
+        if not name:
+            return
         try:
-            name = '/'.join(name.split('boards/')[1:])
-        except Exception:
-            tkinter.messagebox.showerror('Error','Board must be in boards folder')
-        self.importentry.delete(0,'end')
-        self.importentry.insert(0,name)
+            tokens = name.split('boards/')[1:]
+            if not tokens:
+                raise Exception('Board must be in boards folder')
+            name = '/'.join(tokens)
+            self.importentry.delete(0,'end')
+            self.importentry.insert(0,name)
+        except Exception as e:
+            tkinter.messagebox.showerror('Error', str(e))
         
     def exportfile(self,name='boards/MinesweeperGameBoard.txt'):
         name = tkinter.filedialog.asksaveasfilename(
@@ -317,11 +323,13 @@ class MinesweeperGraphics(MinesweeperGame):
             title="Export Minesweeper board",
             defaultextension="txt"
         )
+        self._settings()
         if not name:
             return
         super().exportfile(name)
         self.importentry.delete(0,'end')
         self.importentry.insert(0,'/'.join(name.split('boards/')[1:]))
+
 
     #Reads in the new game settings from the relevant inputs
     def newgame(self):
@@ -370,11 +378,12 @@ class MinesweeperGraphics(MinesweeperGame):
                 if len(mod):
                     tkinter.messagebox.showerror('Error','AI file not found')
             
-        self._fromfile = self.importentry.get().strip()
-
+        
         super().newgame()
 
     def _generateboard(self,firstmove=None):
+        self._fromfile = self.importentry.get().strip()
+
         super()._generateboard(firstmove)
         self.zfilllen=len(str(self._b))
         self._updatecounterstring()

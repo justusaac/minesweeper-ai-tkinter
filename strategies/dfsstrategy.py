@@ -319,8 +319,9 @@ class MinesweeperAI:
                         frees = freesbak
                         return
                     if len(selected)<target:
-                        while candidates:
-                            p = candidates.pop()
+                        candidate_order = sorted(candidates, key=self.empty_neighbors)
+                        for p in candidate_order:
+                            candidates.remove(p)
                             selected.add(p)
                             for b in self.neighbors(*p):
                                 if b in sneed:
@@ -579,7 +580,14 @@ class MinesweeperAI:
             
             self.game.flip(*choice)
             yield
-                        
+            
+    def empty_neighbors(self, loc):
+        count = 0
+        for r,c in self.neighbors(*loc):
+            if self.game.board[r][c]==-1:
+                count+=1
+        return count
+    
     def pickguess(self,bestcandidates):
         bestn = 9
         bestpos = None
