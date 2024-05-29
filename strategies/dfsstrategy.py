@@ -319,7 +319,9 @@ class MinesweeperAI:
                         frees = freesbak
                         return
                     if len(selected)<target:
-                        candidate_order = sorted(candidates, key=self.empty_neighbors)
+                        def edge_neighbors(loc):
+                            return sum((x in frontierss) for x in self.neighbors(*loc))
+                        candidate_order = sorted(candidates, key=edge_neighbors, reverse=True)
                         for p in candidate_order:
                             candidates.remove(p)
                             selected.add(p)
@@ -581,12 +583,7 @@ class MinesweeperAI:
             self.game.flip(*choice)
             yield
             
-    def empty_neighbors(self, loc):
-        count = 0
-        for r,c in self.neighbors(*loc):
-            if self.game.board[r][c]==-1:
-                count+=1
-        return count
+    
     
     def pickguess(self,bestcandidates):
         bestn = 9
