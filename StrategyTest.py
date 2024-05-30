@@ -1,6 +1,7 @@
 from MinesweeperGame import *
 import sys
 import re
+#import random;random.seed(1337)
 
 def test_strategy(n):
     succ = 0

@@ -319,9 +319,9 @@ class MinesweeperAI:
                         frees = freesbak
                         return
                     if len(selected)<target:
-                        def edge_neighbors(loc):
-                            return sum((x in frontierss) for x in self.neighbors(*loc))
-                        candidate_order = sorted(candidates, key=edge_neighbors, reverse=True)
+                        def edge_score(loc):
+                            return sum((board[x[0]][x[1]]==-1) for x in self.neighbors(*loc))
+                        candidate_order = sorted(candidates, key=edge_score,reverse=False)
                         for p in candidate_order:
                             candidates.remove(p)
                             selected.add(p)
